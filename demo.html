@@ -2,23 +2,26 @@
 <html>
 	<head>
 		<title></title>
-		<link rel="stylesheet" href="">
+		<link rel="stylesheet" href="mystyle.css">
 	</head>
 	<body>
-		<h1>樂透!</h1>
-		<p>
-			請輸入三個號碼:
+		<div class="fill">
+			<h1>樂透!</h1>
+			<hr>
+		</div>
+		<p class="text">
+			歡迎參加抽樂透遊戲，請輸入介於1~10的三個號碼:
 		</p>
+		<!--(1) 使用 JS 設計一個樂透遊戲並在網頁中以文字說明遊戲規則，使用者可在網頁上自行輸入 3 個號碼 (範圍是數字 1~10)；每次開始遊戲時會亂數產生 3 個得獎號碼 (範圍是數字 1~10 不重複)；當使用者輸入 3 個號碼並按下開獎按鈕後，會開始比對輸入的號碼及得獎號碼 (不管排列先後順序)，全部對中時為頭獎、2 個號碼對中為貳獎、1 個號碼對中為參獎 -->
 		<input id="num1" type="number">
 		<input id="num2" type="number">
 		<input id="num3" type="number">
 		<button onclick="myFunction()">兌獎</button>
-		<button onclick="reset()">重設</button>
+		<button class="warn" onclick="reset()">重設</button>
 		<p id="result"></p>
 
 		<script>
 			const luckynum = new Array();
-			let redempt = 0;
 
 			for(i=0;i<3;i++){
 				const tempt = Math.floor(Math.random()*10)+1;
@@ -33,25 +36,40 @@
 				let num2 = document.getElementById("num2").value;
 				let num3 = document.getElementById("num3").value;
 				let reArr = Array(num1,num2,num3);
-				let text;
-				let redempt = 0;
-
+				text="";
+				redempt = 0;
+				// (5) 具備輸入檢查功能，若使用者輸入的內容非有效數值或者重複的數字，按下開獎按鈕後會跳出警告訊息，並觸發重新開始(reset)功能
 				if(num1==num2 || num1==num3 || num2==num3){
 					alert("請勿輸入重複的數字");
+					reset();
 				}
 				else if(num1>10 || num2>10 || num3>10 || num1<1 || num2<1 || num3<1){
 					alert("請輸入1~10之間的數字");
+					reset();
 				}
 				else{
-					
-
+					for(i=0;i<3;i++){
+						for(j=0;j<3;j++)
+						{	
+							if(reArr[i]==luckynum[j])
+							{
+								redempt = redempt+1;
+							}
+						}
+					}
+					// (2)三個獎項皆設有不同金額的中獎獎金(金額為自訂之正整數)，當使用者按下開獎按鈕後網頁上會顯示中獎或沒中獎的訊息，若有中獎還會額外顯示獎項和獎金金額
 					if(redempt>0){
-						if(redempt==1)
-							text = "恭喜您!中參獎!";
-						else if(redempt==2)
-							text = "恭喜您!中貳獎!";
-						else if(redempt==3)
-							text = "恭喜您!中投獎!";
+						alert("中獎了~");
+						text="恭喜您!";
+						if(redempt==1){
+							text += "中參獎!獎金為:1000元";
+						}
+						else if(redempt==2){
+							text += "中貳獎!!獎金為:5000元";
+						}
+						else if(redempt==3){
+							text += "中頭獎!!!獎金為:10000元";
+						}
 					}
 					else{
 						text="銘謝惠顧><\n請再接再厲!";
@@ -59,8 +77,13 @@
 					document.getElementById("result").innerHTML = text;
 				}
 			}
+			// (4) 具備重新開始(reset)功能的按鈕，讓使用者可以進行全新一輪的遊戲 (重新亂數產生得獎號碼並清空舊訊息)
 			function reset(){
-				luckynum = new Array();
+				alert("已更新樂透號碼");
+				for(i=0;i<3;i++){
+					luckynum.pop();
+				}
+
 				for(i=0;i<3;i++){
 					const tempt = Math.floor(Math.random()*10)+1;
 					if(luckynum.indexOf(tempt)!=-1)
@@ -68,7 +91,7 @@
 					else
 						luckynum[i]=tempt;
 				}
-				text="";
+				document.getElementById("result").innerHTML = "";
 			}
 		</script>
 	</body>

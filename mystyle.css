@@ -1,7 +1,19 @@
+
+/*  (3) 網頁中使用了 5 種不同的 CSS 語法所設計的特效，相關語法敘述皆須置於名稱為 "mystyle.css" 的檔案中 */
 h1{
-	color: cadetblue;
+	color: rgb(255, 255, 255);
 }
 hr{
-	background-color:brown;
-	height:1px;
+	background-color:rgb(22, 4, 144);
+	height:3px;
+}
+button.warn{
+	background-color: red;
+	color: aliceblue;
+}
+.fill{
+	background-color: cornflowerblue;
+}
+.text{
+	font-size: 15px;
 }
